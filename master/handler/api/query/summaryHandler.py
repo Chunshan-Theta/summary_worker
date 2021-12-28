@@ -52,7 +52,7 @@ class summaryHandler(APIHandlerBase):
         #
         worker_response = await Task.get_content()
         time = 0
-        while worker_response is None and time < 500:
+        while worker_response is None and time < 1200:
             worker_response = await Task.get_content()
             time += 1
             await asyncio.sleep(0.1)

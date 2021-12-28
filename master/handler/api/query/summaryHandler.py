@@ -61,6 +61,13 @@ class summaryHandler(APIHandlerBase):
             #     'get parameter': task_data,
             #     "worker response": json.loads(worker_response)
             # })
-            result = json.loads(worker_response)["content"]
-            return self.write_json(result)
+            if worker_response is not None:
+                result = json.loads(worker_response)["content"]
+                return self.write_json(result)
+            else:
+                return self.write_json({
+                    "status": "worker time-out",
+                    "data": str(worker_response)
+                })
+
 

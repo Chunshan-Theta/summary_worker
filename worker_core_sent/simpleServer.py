@@ -28,7 +28,7 @@ async def main():
     while True:
         logging.warning("get work....")
         task = await QRTask1.get_content()
-        logging.warning(f"get QRTask1 work -> {task}")
+        logging.warning(f"get QRTask1:({task_name}) work -> {task}")
         if task is not None:
             #
             obj = task.get("obj", None)

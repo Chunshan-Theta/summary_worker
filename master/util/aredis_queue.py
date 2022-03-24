@@ -1,6 +1,7 @@
 import uuid
 
 import aredis
+import logging
 
 # import asyncio
 import json
@@ -41,6 +42,7 @@ class NLUQueue(object):
 class QueueRequestTask(object):
     def __init__(self, data, task_type_label, to_worker_queue_name="to_worker", to_master_queue_name="to_master"):
         self.task_uuid = str(uuid.uuid4())
+        self.to_worker_queue_name = to_worker_queue_name
         self.data: dict = data
         self.to_worker_queue = NLUQueue(name=to_worker_queue_name, namespace=task_type_label)
         self.to_master_queue = NLUQueue(name=to_master_queue_name, namespace=task_type_label)
@@ -50,7 +52,8 @@ class QueueRequestTask(object):
             "obj": self.data,
             "request_id": self.task_uuid
         }
-        print(f"data: {data}")
+        logging.warning(f"to worker:({self.to_worker_queue_name}) work -> {data}")
+
         task_str = json.dumps(data, ensure_ascii=False)
         await self.to_worker_queue.enqueue(task_str)
 

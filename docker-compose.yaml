@@ -38,8 +38,6 @@ services:
             dockerfile: Dockerfile
         image: worker_core_sent_image
         restart: always
-        environment:
-            - task_name=core_sent
         volumes:
             - "./LocalStorage/worker:/app/LocalStorage"
         depends_on:

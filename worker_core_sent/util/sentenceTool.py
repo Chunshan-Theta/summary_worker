@@ -62,6 +62,8 @@ def find_tfidf(word):
 def is_important_word(word):
   words = keep_tag_N_A_V(word)
   return_arr= []
+  if words is None:
+    return []
   for w,t in words:
     score = find_tfidf(w)
     if score > 25:

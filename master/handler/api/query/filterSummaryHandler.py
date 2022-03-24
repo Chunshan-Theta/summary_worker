@@ -5,7 +5,7 @@ from util.aredis_queue import QueueRequestTask
 import asyncio
 
 
-class summaryHandler(APIHandlerBase):
+class filterSummaryHandler(APIHandlerBase):
 
     async def post(self):
         """
@@ -44,7 +44,7 @@ class summaryHandler(APIHandlerBase):
         task_data = {
             "texts": corpus
         }
-        Task = QueueRequestTask(data=task_data, task_type_label="gpt_summary")
+        Task = QueueRequestTask(data=task_data, task_type_label="core_sent")
 
         #
         await Task.to_worker()

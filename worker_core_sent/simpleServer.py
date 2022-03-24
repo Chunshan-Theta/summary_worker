@@ -3,7 +3,8 @@ from util.aredis_queue import QueueRespondsTask
 import asyncio
 import logging
 from util import Job
-from summary import summary
+from util.sentenceTool import sent_cut, is_important_word
+
 
 
 
@@ -14,7 +15,11 @@ async def main():
     async def __main_task__(job_obj: Job, QRTask):
         job_obj.content["sent_summary"] = []
         for s in job_obj.content["texts"]:
-            job_obj.content["sent_summary"].append(summary(s))
+            words = sent_cut(s)
+            re_words= []
+            for w in words:
+                re_words.append(is_important_word(w))
+            job_obj.content["sent_summary"].append(re_words)
         #
         await QRTask.to_master(job_obj.to_json(), job_obj.request_id)
 
@@ -38,5 +43,5 @@ async def main():
         await asyncio.sleep(1)
 
 
-task_name = os.getenv("task_name", "gpt_summary")
+task_name = os.getenv("task_name", "core_sent")
 asyncio.run(main())

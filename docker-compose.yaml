@@ -20,15 +20,26 @@ services:
         ports:
           - "10050:10050"
 
-    worker_summary:
+#    worker_summary:
+#        build:
+#            context: ./worker_summary
+#            dockerfile: Dockerfile
+#        image: worker_summary_image
+#        restart: always
+#        environment:
+#            - task_name=gpt_summary
+#        volumes:
+#            - "./LocalStorage/worker:/app/LocalStorage"
+#        depends_on:
+#            - redis
+    worker_word_summary:
         build:
-            context: ./worker_summary
+            context: ./worker_core_sent
             dockerfile: Dockerfile
-        image: worker_summary_image
+        image: worker_core_sent_image
         restart: always
         environment:
-            - task_name=summary
-            - sub_task_name_1=sent_vec
+            - task_name=core_sent
         volumes:
             - "./LocalStorage/worker:/app/LocalStorage"
         depends_on:

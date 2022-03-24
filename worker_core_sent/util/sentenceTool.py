@@ -24,7 +24,7 @@ with open("./util/addition_dict.txt") as f:
       word_tags[word] = tag
 
 
-with open("./util/dict.txt") as f:
+with open("./util/tfidf.json") as f:
 # with open("./tfidf.json") as f:
   tfidf = json.load(f)
 

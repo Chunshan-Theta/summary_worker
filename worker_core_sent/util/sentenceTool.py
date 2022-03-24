@@ -69,7 +69,7 @@ def is_important_word(word):
     if score > 25:
       return_arr.append((w,t,score))
 
-  return is_important_word
+  return return_arr
 
 # print(keep_tag_N_A_V("國道"))
 # print(keep_tag_N_A_V("兩個月"))

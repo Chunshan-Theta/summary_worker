@@ -3,7 +3,7 @@ import json
 from handler.api.apiHandlerBase import APIHandlerBase
 from util.aredis_queue import QueueRequestTask
 import asyncio
-
+from util.ArticleCutter import interface_convolution
 
 class filterSummaryHandler(APIHandlerBase):
 
@@ -31,16 +31,17 @@ class filterSummaryHandler(APIHandlerBase):
                             type: string
                         default: [
                             "如個案有居家服務需求該如何得知此個案預派案的輪序單位",
-                            "A單位與案家討論完服務後需簽立同意書會有ㄧ致性的範本嗎",
-                            "A單位人員完訓後須到照管中心實習於實習前組合包的內容是照專擬定該由誰協助處理",
-                            "請問A級單位特約申請作業大概什麼時候會公告呢"
+                            "其實你很棒知道自己因為害怕別人的眼光而造就自己體貼的個性或許這樣的性格也是讓你更懂得應對進退至於緊張的狀況下次感受到大家的注目試著先閉上眼睛深呼吸告訴自己沒問題然後再張開眼睛開始動作也許就能緩解那種緊張心情喔"
                         ]
         responses:
             200:
               description: test
         """
         body = json.loads(self.request.body)
-        corpus = body.get("corpus", None)
+        inputs = body.get("corpus", None)
+        corpus = []
+        for input in inputs:
+            corpus+=[s for s in interface_convolution(input) if len(s)>0]
         task_data = {
             "texts": corpus
         }

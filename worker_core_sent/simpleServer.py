@@ -19,8 +19,10 @@ async def main():
             re_words= []
             for w in words:
                 important_words = is_important_word(w)
-                if len(important_words)>0:
-                    re_words.append(important_words)
+                if len(important_words)==0:
+                    continue
+                re_words.extend(important_words)
+
             job_obj.content["sent_summary"].append(re_words)
         #
         await QRTask.to_master(job_obj.to_json(), job_obj.request_id)
